@@ -17,9 +17,10 @@ echo "FROM $FEDORA_VERSION" > $preparation_dockerfile
 echo 'RUN dnf -y install /usr/bin/javac' >> $preparation_dockerfile
 echo "COPY runlocal.sh ." >> $preparation_dockerfile
 echo "COPY src src " >> $preparation_dockerfile
+echo "RUN ls -l /etc" >> $preparation_dockerfile
 echo "RUN ls -l ." >> $preparation_dockerfile
 echo "RUN pwd " >> $preparation_dockerfile
 
 podman build --tag run-incont-sockets -f ./$preparation_dockerfile
-podman run --name sockets run-incont-sockets bash runlocal.sh false
+podman run --name sockets run-incont-sockets bash runlocal.sh false  true true
 #podman run -it --name sockets run-incont-sockets  bash
