@@ -14,13 +14,12 @@ set -u
 FEDORA_VERSION=fedora:36
 preparation_dockerfile=docekrfile.tmp
 echo "FROM $FEDORA_VERSION" > $preparation_dockerfile
-echo 'RUN dnf -y install /usr/bin/javac' >> $preparation_dockerfile
+echo 'RUN dnf -y install java-1.8.0-openjdk-devel java-11-openjdk-devel java-17-openjdk-devel' >> $preparation_dockerfile
 echo "COPY runlocal.sh ." >> $preparation_dockerfile
 echo "COPY src src " >> $preparation_dockerfile
-echo "RUN ls -l /etc" >> $preparation_dockerfile
 echo "RUN ls -l ." >> $preparation_dockerfile
 echo "RUN pwd " >> $preparation_dockerfile
 
-podman build --tag run-incont-sockets -f ./$preparation_dockerfile
-podman run --name sockets run-incont-sockets bash runlocal.sh false  true true
-#podman run -it --name sockets run-incont-sockets  bash
+podman build --tag run-incont-gui -f ./$preparation_dockerfile
+podman run --name gui run-incont-gui bash runlocal.sh
+#podman run -it --name gui run-incont-gui  bash
