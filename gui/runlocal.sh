@@ -1,6 +1,12 @@
 #!/bin/bash
 set -x
 
+mkdir work
+cd work
+if [ ! -e src ] ; then
+  cp -r ../src .
+fi
+
 rm -vf guisoc/Main.class
 rmdir -v guisoc
 set -eo pipefail
@@ -13,7 +19,6 @@ export DISPLAY="$2"
 fi
 
 set -u
-
 
 function run() {
   /usr/lib/jvm/java-1.8.0-openjdk/bin/javac -d .  src/guisoc/Main.java
