@@ -12,11 +12,6 @@ rmdir -v guisoc
 set -eo pipefail
 
 finish=$1
-if [ "x$2" == x ] ; then
-  export DISPLAY=:0
-else
-export DISPLAY="$2"
-fi
 
 set -u
 
