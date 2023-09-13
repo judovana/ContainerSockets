@@ -1,6 +1,7 @@
 #!/bin/bash
 set -x
 
+#all this mayhem with work dir is because of permissions inside containers with uuid in play
 mkdir work
 cd work
 if [ ! -e src ] ; then

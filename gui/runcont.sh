@@ -14,6 +14,7 @@ set -u
 FEDORA_VERSION=fedora:36
 preparation_dockerfile=docekrfile.tmp
 echo "FROM $FEDORA_VERSION" > $preparation_dockerfile
+#with uuid moved to container, we do nto have permissions to wrtie to /
 echo "RUN mkdir work" >> $preparation_dockerfile
 echo "RUN chmod 777 work" >> $preparation_dockerfile
 echo 'RUN dnf -y install java-1.8.0-openjdk-devel java-11-openjdk-devel java-17-openjdk-devel' >> $preparation_dockerfile
@@ -26,4 +27,5 @@ echo "RUN ls -l work" >> $preparation_dockerfile
 podman build --tag run-incont-gui -f ./$preparation_dockerfile
 
 xhost +"local:podman@" #<- normal user !!! mandatory
-podman run -it --rm -v $XAUTHORITY:$XAUTHORITY:ro -v /tmp/.X11-unix:/tmp/.X11-unix:ro --userns keep-id -e "DISPLAY" --security-opt label=type:container_runtime_t --name gui run-incont-gui bash work/runlocal.sh
+podman run -v /tmp/.X11-unix:/tmp/.X11-unix:ro -e "DISPLAY" --security-opt label=type:container_runtime_t --name gui run-incont-gui bash work/runlocal.sh
+#podman run -it -v /tmp/.X11-unix:/tmp/.X11-unix:ro -e "DISPLAY" --security-opt label=type:container_runtime_t --name gui run-incont-gui bash
