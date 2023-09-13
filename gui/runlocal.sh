@@ -1,13 +1,6 @@
 #!/bin/bash
 set -x
 
-#all this mayhem with work dir is because of permissions inside containers with uuid in play
-mkdir work
-cd work
-if [ ! -e src ] ; then
-  cp -r ../src .
-fi
-
 rm -vf guisoc/Main.class
 rmdir -v guisoc
 set -eo pipefail
