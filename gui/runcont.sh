@@ -24,5 +24,6 @@ echo "RUN ls -l ." >> $preparation_dockerfile
 echo "RUN ls -l work" >> $preparation_dockerfile
 
 podman build --tag run-incont-gui -f ./$preparation_dockerfile
-#DISPLAY=:0 podman run                                                                                                                                                        --name gui run-incont-gui bash work/runlocal.sh
- DISPLAY=:0 podman run -it --rm -v $XAUTHORITY:$XAUTHORITY:ro -v /tmp/.X11-unix:/tmp/.X11-unix:ro --userns keep-id -e "DISPLAY" --security-opt label=type:container_runtime_t --net=host --rm -v ~/.Xauthority:/root/.Xauthority:Z --name gui run-incont-gui bash work/runlocal.sh DISPLAY=:0 podman run -it --rm -v $XAUTHORITY:$XAUTHORITY:ro -v /tmp/.X11-unix:/tmp/.X11-unix:ro --userns keep-id -e "DISPLAY" --security-opt label=type:container_runtime_t --name gui run-incont-gui bash work/runlocal.sh
+
+xhost +"local:podman@" #<- normal user !!! mandatory
+podman run -it --rm -v $XAUTHORITY:$XAUTHORITY:ro -v /tmp/.X11-unix:/tmp/.X11-unix:ro --userns keep-id -e "DISPLAY" --security-opt label=type:container_runtime_t --name gui run-incont-gui bash work/runlocal.sh
