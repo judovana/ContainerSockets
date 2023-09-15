@@ -12,7 +12,7 @@ set -u
 rm -rf res-sed
 cp -r res  res-sed
 pushd res-sed
-  CONFIG=`pwd`/config_template.xml
+  CONFIG=/`pwd`/config_template.xml
   DIST_SYNC_CFG=`pwd`/dist-sync_template.xml
   sed -i "s;%{SLAVE_COUNT};1;;" ${CONFIG}
   sed -i "s;%{HEAP_SIZE};1000;g;" ${CONFIG}
