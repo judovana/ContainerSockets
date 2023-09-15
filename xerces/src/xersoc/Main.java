@@ -24,27 +24,19 @@ public class Main /*extends ConfigParser*//* implements ConfigSchema */{
    }
 
    public void parseConfig(String config) throws Exception {
+      System.out.println("laoded? " + config);
+      config = config.replaceAll("^/+","/");
       Document document;
       try {
          document = createDocumentBuilder().parse(config);
       } catch (Exception e) {
          throw new IllegalStateException(e);
       }
-   	 System.out.println("laoded?");
-   	 System.err.println("loaded!");
+   	 System.err.println("loaded! " + config);
   }
 
    protected DocumentBuilder createDocumentBuilder() throws ParserConfigurationException {
-   	 System.out.println("JEDU?");
-   	 System.err.println("JEDU?");
       DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-      documentBuilderFactory.setValidating(false);
-      //documentBuilderFactory.setFeature("http://xml.org/sax/features/external-parameter-entities", false); // it doesn't work
-      documentBuilderFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-      documentBuilderFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-      documentBuilderFactory.setFeature("http://xml.org/sax/features/external-general-entities", false);
-      documentBuilderFactory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
-      //documentBuilderFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
       documentBuilderFactory.setNamespaceAware(true);
       return documentBuilderFactory.newDocumentBuilder();
    }
